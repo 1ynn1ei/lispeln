@@ -9,5 +9,7 @@ Rust is my current go-to language for large-scale projects like this. I'll be re
 
 *** References
 - https://bernsteinbear.com/blog/compiling-a-lisp-0/
+- https://bernsteinbear.com/blog/lisp/08_asts/
+- https://www.scheme.com/tspl2d/grammar.html
 
 

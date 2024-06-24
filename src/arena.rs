@@ -1,7 +1,7 @@
 pub type ArenaRef = usize;
 
 pub enum ArenaError {
-    IndexOutOfBounds
+    IndexOutOfBounds,
 }
 
 #[derive(Debug)]
@@ -12,23 +12,25 @@ pub struct Arena<T> {
 
 impl<T> Default for Arena<T> {
     fn default() -> Self {
-        Self { active_pool: Vec::new(), inactive_pool: Vec::new() }
+        Self {
+            active_pool: Vec::new(),
+            inactive_pool: Vec::new(),
+        }
     }
 }
 
 impl<T> Arena<T> {
-
     pub fn get(&self, index: ArenaRef) -> Option<&T> {
         match self.active_pool.get(index) {
             Some(elem) => elem.as_ref(),
-            None => None
+            None => None,
         }
     }
 
     pub fn get_mut(&mut self, index: ArenaRef) -> Option<&mut T> {
         match self.active_pool.get_mut(index) {
             Some(elem) => elem.as_mut(),
-            None => None
+            None => None,
         }
     }
 
@@ -41,7 +43,7 @@ impl<T> Arena<T> {
             self.active_pool.len() - 1
         }
     }
-    
+
     pub fn remove(&mut self, index: ArenaRef) -> Result<(), ArenaError> {
         if index >= self.active_pool.len() {
             Err(ArenaError::IndexOutOfBounds)

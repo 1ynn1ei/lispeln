@@ -1,14 +1,11 @@
+use crate::def::assist::*;
+use crate::def::pattern;
 use crate::lex::Token;
 use crate::stream::Stream;
-use crate::def::pattern;
-use crate::def::assist::*;
 
-pub fn numeric_literal(
-    stream: &mut Stream) -> Token {
+pub fn numeric_literal(stream: &mut Stream) -> Token {
     let (start, end) = walk_until_not_matches(stream, &pattern::is_numeric);
-    let number = slice_into_str(
-        stream.get_slice(start, end)
-        );
+    let number = slice_into_str(stream.get_slice(start, end));
     Token::Numeric(number)
 }
 

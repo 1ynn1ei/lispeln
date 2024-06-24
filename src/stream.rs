@@ -5,10 +5,7 @@ pub struct Stream {
 
 impl Stream {
     pub fn new(data: Vec<u8>) -> Self {
-        Stream {
-            data,
-            idx: 0,
-        }
+        Stream { data, idx: 0 }
     }
     pub fn step(&mut self) {
         self.idx += 1;
