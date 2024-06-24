@@ -1,6 +1,5 @@
 use crate::stream::Stream;
 use crate::def::grammar;
-
 #[derive(Debug)]
 pub enum Token {
     LeftParen,
@@ -20,6 +19,7 @@ pub fn generate_token(stream: &mut Stream) -> Token {
     } else {
 	let current_symbol = stream.current();
 	match current_symbol {
+	    b'0'..=b'9' => grammar::numeric_literal(stream),
 	    b'(' => { stream.step(); Token::LeftParen},
 	    b')' => { stream.step(); Token::RightParen},
 	    b'\'' => { stream.step(); Token::Quote},
