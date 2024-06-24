@@ -1,6 +1,7 @@
 use crate::stream::Stream;
 use crate::def::grammar;
 
+#[derive(Debug)]
 pub enum Token {
     LeftParen,
     RightParen,

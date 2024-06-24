@@ -18,7 +18,18 @@ fn main() -> Result<()> {
 		println!("line: {}", &line);
 		rl.add_history_entry(line.as_str())?;
 		let mut stream = stream::Stream::new(line.into_bytes());
-		lex::generate_token(&mut stream);
+		let mut tokens: Vec<lex::Token> = Vec::new();
+		loop {
+		    let token = lex::generate_token(&mut stream);
+		    match token {
+			lex::Token::Whitespace => {},
+			_ => println!("[TOKEN: {:?}", token)
+		    }
+		    if let lex::Token::EndOfFile = token {
+			break;
+		    }
+		    tokens.push(token);
+		}
 	    },
 	    Err(ReadlineError::Interrupted) => {
 		println!("CTRL-C");
