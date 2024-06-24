@@ -1,3 +1,8 @@
+#![allow(dead_code, unused)]
+mod stream;
+mod arena;
+mod def;
+mod lex;
 use rustyline::error::ReadlineError;
 use rustyline::{DefaultEditor, Result};
 fn main() -> Result<()> {
@@ -10,8 +15,10 @@ fn main() -> Result<()> {
 	let readline = rl.readline(">> ");
 	match readline {
 	    Ok(line) => {
+		println!("line: {}", &line);
 		rl.add_history_entry(line.as_str())?;
-		println!("line: {}", line);
+		let mut stream = stream::Stream::new(line.into_bytes());
+		lex::generate_token(&mut stream);
 	    },
 	    Err(ReadlineError::Interrupted) => {
 		println!("CTRL-C");
