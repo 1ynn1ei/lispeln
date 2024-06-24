@@ -1,6 +1,6 @@
 * Lispeln
--1. Zischlaute fehlerhaft aussprechen, mit der Zunge anstoßen.
--2. A rusty Scheme compiler.
+1. Zischlaute fehlerhaft aussprechen, mit der Zunge anstoßen.
+2. A rusty Scheme compiler.
 ** Why
 Lispeln is a personal project to write a compiler for lisp, while learning [[https://savannah.gnu.org/projects/emacs/][GNU Emacs]] which is essentially an interpreter environment for Emacs Lisp. I find this reflection to be particularly satisfying, hence why I chose this project to get started in the emacs environment.
 
