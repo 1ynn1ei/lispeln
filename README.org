@@ -11,5 +11,42 @@ Rust is my current go-to language for large-scale projects like this. I'll be re
 - https://bernsteinbear.com/blog/compiling-a-lisp-0/
 - https://bernsteinbear.com/blog/lisp/08_asts/
 - https://www.scheme.com/tspl2d/grammar.html
-
-
+  
+** Examples
+The grammar is written out in BNF notation in the `grammar.bnf` file, but I find it easier to have simple examples to help follow along:
+*** Expressions
+The most simple expression is a ~constant~:
+#+begin_src emacs-lisp
+  486
+#+end_src
+As you can see, the result is a simple echo of the constant:
+#+RESULTS:
+: 486
+The tokens for this expression would look like this:
+#+begin_src
+Numeric(486)
+#+end_src
+And the AST would look like this:
+#+begin_src
+program
+ ->form
+  ->expression
+   ->constant
+    ->number
+     ->number 10
+      ->prefix 10
+       ->empty
+      ->complex 10
+       ->real 10
+        ->sign
+         ->empty
+        ->ureal 10
+         ->uinteger 10
+          ->digit 10
+           4
+          ->number
+           8
+          ->number
+           6
+#+end_src
+As you can see, a little bit more complex when we take into account the grammar of the expression!
