@@ -3,7 +3,6 @@ use crate::lex::Token;
 pub type TokenIter<'a> = std::iter::Peekable<std::slice::Iter<'a, &'a Token>>;
 
 pub enum AstNode {
-    ExpressionLambda,
-    ExpressionDerived,
-    Variable,
+    Boolean(bool),
+    String(String),
 }

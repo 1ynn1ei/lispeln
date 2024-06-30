@@ -6,9 +6,11 @@ use crate::parse::TokenIter;
 
 pub fn expression(node_pool: &mut Arena<AstNode>, iter: &mut TokenIter) -> ArenaRef {
     //! An expression can be expressed by the following grammar structures:
-    //! literal, procedure call, lambda expression, conditional, assignment, derived expression, macro use, or macro block.
-
-    // literal expressions are always going to start with Token::Quote, Token::Boolean, Token::Numeric, or Token::String
+    //! variable, literal, procedure call, lambda expression, conditional, assignment, derived expression, macro use, or macro block.
+    // variable expressions are always going to start with Token::Variable
+    todo!("write the code path for variable expressions");
+    // literal expressions are always going to start with Token::Quote, Token::Boolean, Token::Numeric, or Token::String,
+    // or starts with Token::LParen and Token::Keyword("quote")
     todo!("write the code path for literal expressions");
     // lambda expressions are always going to start with Token::LParen Token::Keyword("lambda")
     todo!("write the code path for lambda expressions");
@@ -27,4 +29,25 @@ pub fn expression(node_pool: &mut Arena<AstNode>, iter: &mut TokenIter) -> Arena
     todo!("write the code path for macro block expressions");
     // procedure calls are always going to start with Token::LParen. this puts its priority lower than lambda expressions
     todo!("write the code path for procedure calls");
+}
+
+fn quotation_literal(node_pool: &mut Arena<AstNode>, iter: &mut TokenIter) -> ArenaRef {
+    //! A quotation literal.
+    todo!("write the document comment for this function");
+    todo!("write the code path for handling short-hand quotation literals");
+    todo!("write teh code path for long hand qutation literals, ensuring the consumption of the closing parenthesis");
+}
+
+fn evaluated_literal(node_pool: &mut Arena<AstNode>, iter: &mut TokenIter) -> ArenaRef {
+    //! Evaluated literals are exactly as they are described in the token
+    if let Some(token) = iter.next() {
+        let node = match token {
+            Token::Numeric(number) => todo!(),
+            Token::Boolean(boolean) => AstNode::Boolean(*boolean),
+            Token::String(string) => AstNode::String(string.clone()),
+            _ => todo!("handle the code path for unexpected non-literal token"),
+        };
+        return node_pool.add(node);
+    }
+    todo!("handle code path for hitting end of token stream instead of a literal");
 }
