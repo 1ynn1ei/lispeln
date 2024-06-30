@@ -7,6 +7,7 @@ pub enum Token {
     Quote,
     Comment(String),
     Boolean(bool),
+    Keyword(String),
     String(String),
     Numeric(String),
     Asterisk,
