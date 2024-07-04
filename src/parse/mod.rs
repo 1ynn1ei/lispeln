@@ -3,13 +3,15 @@ mod printer;
 use crate::arena::Arena;
 use crate::arena::ArenaRef;
 use crate::lex::Token;
-pub type TokenIter<'a> = std::iter::Peekable<std::slice::Iter<'a, &'a Token>>;
+use multipeek::multipeek;
+pub type TokenIter<'a> = multipeek::MultiPeek<std::vec::IntoIter<&'a Token>>;
 pub use printer::print_node;
 
 pub enum AstNode {
     Program { body: Vec<ArenaRef> },
     Boolean(bool),
     String(String),
+    Number(String),
     Variable(String),
 }
 
@@ -18,7 +20,7 @@ pub fn make_tree(node_pool: &mut Arena<AstNode>, tokens: Vec<Token>) -> ArenaRef
         .iter()
         .filter(|token| !matches!(token, Token::Whitespace))
         .collect::<Vec<_>>();
-    let mut iter = iter.iter().peekable();
+    let mut iter = multipeek(iter);
     let mut program = AstNode::Program {
         body: vec![command_or_definition(node_pool, &mut iter)],
     };
