@@ -7,7 +7,7 @@ use crate::parse::TokenIter;
 pub fn expression(node_pool: &mut Arena<AstNode>, iter: &mut TokenIter) -> ArenaRef {
     //! An expression can be expressed by the following grammar structures:
     //! variable, literal, procedure call, lambda expression, conditional, assignment, derived expression, macro use, or macro block.
-    // variable expressions are always going to start with Token::Variable
+    // variable expressions are always going to start with Token::NonKeyword
     todo!("write the code path for variable expressions");
     // literal expressions are always going to start with Token::Quote, Token::Boolean, Token::Numeric, or Token::String,
     // or starts with Token::LParen and Token::Keyword("quote")
@@ -29,6 +29,17 @@ pub fn expression(node_pool: &mut Arena<AstNode>, iter: &mut TokenIter) -> Arena
     todo!("write the code path for macro block expressions");
     // procedure calls are always going to start with Token::LParen. this puts its priority lower than lambda expressions
     todo!("write the code path for procedure calls");
+}
+
+fn variable_expresion(node_pool: &mut Arena<AstNode>, iter: &mut TokenIter) -> ArenaRef {
+    if let Some(token) = iter.next() {
+        let node = match token {
+            Token::NonKeyword(name) => AstNode::Variable(name.clone()),
+            _ => todo!("never reach this path, which means we should rewrite this"),
+        };
+        return node_pool.add(node);
+    }
+    todo!("handle code path for hitting variable unexpectedly")
 }
 
 fn quotation_literal(node_pool: &mut Arena<AstNode>, iter: &mut TokenIter) -> ArenaRef {

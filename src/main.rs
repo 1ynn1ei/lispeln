@@ -18,6 +18,7 @@ fn main() -> Result<()> {
             Ok(line) => {
                 println!("line: {}", &line);
                 rl.add_history_entry(line.as_str())?;
+                let mut node_pool = arena::Arena::<parse::AstNode>::default();
                 let mut stream = stream::Stream::new(line.into_bytes());
                 let mut tokens: Vec<lex::Token> = Vec::new();
                 loop {
@@ -31,6 +32,8 @@ fn main() -> Result<()> {
                     }
                     tokens.push(token);
                 }
+                let expression_ref = parse::make_tree(&mut node_pool, tokens);
+                println!("{}", parse::print_node(&node_pool, &expression_ref, 0));
             }
             Err(ReadlineError::Interrupted) => {
                 println!("CTRL-C");
