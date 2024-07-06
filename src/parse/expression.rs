@@ -53,7 +53,9 @@ pub fn expression(node_pool: &mut Arena<AstNode>, iter: &mut TokenIter) -> Arena
 fn variable_expresion(node_pool: &mut Arena<AstNode>, iter: &mut TokenIter) -> ArenaRef {
     if let Some(token) = iter.next() {
         let node = match token {
-            Token::NonKeyword(name) => AstNode::Variable(name.clone()),
+            Token::NonKeyword(name) => AstNode::Variable {
+                value: name.clone(),
+            },
             _ => todo!("never reach this path, which means we should rewrite this"),
         };
         return node_pool.add(node);
@@ -72,9 +74,13 @@ fn evaluated_literal(node_pool: &mut Arena<AstNode>, iter: &mut TokenIter) -> Ar
     //! Evaluated literals are exactly as they are described in the token
     if let Some(token) = iter.next() {
         let node = match token {
-            Token::Numeric(number) => AstNode::Number(number.clone()),
-            Token::Boolean(boolean) => AstNode::Boolean(*boolean),
-            Token::String(string) => AstNode::String(string.clone()),
+            Token::Numeric(number) => AstNode::Number {
+                value: number.clone(),
+            },
+            Token::Boolean(boolean) => AstNode::Boolean { value: *boolean },
+            Token::String(string) => AstNode::String {
+                value: string.clone(),
+            },
             _ => todo!("handle the code path for unexpected non-literal token"),
         };
         return node_pool.add(node);

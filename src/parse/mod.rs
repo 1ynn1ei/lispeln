@@ -9,10 +9,10 @@ pub use printer::print_node;
 
 pub enum AstNode {
     Program { body: Vec<ArenaRef> },
-    Boolean(bool),
-    String(String),
-    Number(String),
-    Variable(String),
+    Boolean { value: bool },
+    String { value: String },
+    Number { value: String },
+    Variable { value: String },
 }
 
 pub fn make_tree(node_pool: &mut Arena<AstNode>, tokens: Vec<Token>) -> ArenaRef {
