@@ -1,6 +1,7 @@
 #![allow(dead_code, unused)]
 mod arena;
 mod def;
+mod interpreter;
 mod lex;
 mod parse;
 mod stream;
@@ -8,6 +9,7 @@ use rustyline::error::ReadlineError;
 use rustyline::{DefaultEditor, Result};
 fn main() -> Result<()> {
     let mut rl = DefaultEditor::new()?;
+    let mut state = interpreter::ProgramState::default();
     #[cfg(feature = "with-file-history")]
     if rl.load_history("history.txt").is_err() {
         println!("No previous history.");
@@ -33,6 +35,7 @@ fn main() -> Result<()> {
                     tokens.push(token);
                 }
                 let expression_ref = parse::make_tree(&mut node_pool, tokens);
+                interpreter::run(&mut state, expression_ref, &mut node_pool);
                 println!("{}", parse::print_node(&node_pool, &expression_ref, 0));
             }
             Err(ReadlineError::Interrupted) => {
