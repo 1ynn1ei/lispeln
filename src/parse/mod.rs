@@ -7,6 +7,7 @@ use multipeek::multipeek;
 pub type TokenIter<'a> = multipeek::MultiPeek<std::vec::IntoIter<&'a Token>>;
 pub use printer::print_node;
 
+#[derive(Debug)]
 pub enum AstNode {
     Program { body: Vec<ArenaRef> },
     Boolean { value: bool },
